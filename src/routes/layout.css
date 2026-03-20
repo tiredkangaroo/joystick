@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
+@import "tailwindcss";
+
+:root,
+html,
+body,
+body > div {
+  @apply w-full h-full m-0 p-0 text-white;
+  font-family: "Pixelify Sans", "Times New Roman", Times, serif;
+}
+#title {
+  @apply flex items-center justify-center gap-1 p-0;
+}
+#title > span {
+  @apply m-0 p-0 text-[10rem];
+}
+button {
+  @apply cursor-pointer;
+}
+#bg {
+  background-image: url("/images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
