@@ -9,6 +9,14 @@ body > div {
 }
 html {
   font-family: "Pixelify Sans", "Times New Roman", Times, serif;
+  scroll-snap-type: y proximity;
+  overflow-y: scroll;
+}
+#bg,
+#how-works,
+#requirements {
+  scroll-snap-align: start;
+  /* height: 100vh; */
 }
 #title {
   @apply flex items-center justify-center gap-1 p-0;

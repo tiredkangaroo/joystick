@@ -175,7 +175,7 @@
   </div>
 </main>
 <div
-  class="relative bg-[#050c2e] w-full min-h-screen z-10 py-16 px-4 md:px-12 flex flex-col items-center"
+  class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="how-works"
 >
   <h1 class="text-[8vw] text-center">how does this work?</h1>
@@ -201,10 +201,10 @@
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">2. make a game!</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
         think of an idea and start making! it can be anything from a story game, to a platformer, or a strategy game.<br
-        />
+        /><br />
         you can use any game engine or programming language, as long as your game meets the requirements listed below.<br
-        />
-        log your coding time on
+        /><br />
+        <span class="font-bold text-red-300 text-[110%]">important!</span> log your coding time on
         <a href="https://hackatime.hackclub.com" target="_blank">hackatime</a>
         and your art/music time on
         <a href="https://lapse.hackclub.com" target="_blank">lapse</a>!
@@ -255,7 +255,7 @@
       </p>
     </div>
   </div>
-  <div class="w-full items-center justify-center flex absolute bottom-2">
+  <div class="w-full items-center justify-center flex mt-[2vh] bottom-2">
     <p>
       have any questions? ask us on <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline"
         >slack</a
