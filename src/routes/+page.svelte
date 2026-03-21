@@ -33,8 +33,8 @@
     };
   });
 
-  const numButtons = 3;
-  const buttonLink = ["#requirements", "#demos", "#faq"];
+  const numButtons = 2;
+  const buttonLink = ["#how-works", "#requirements"];
   document.onkeydown = (e) => {
     console.log(e.key);
     if (e.key === "ArrowDown") {
@@ -117,7 +117,7 @@
     </div>
     <div class="flex flex-col items-center justify-center mt-8 gap-3 w-full">
       <button
-        class="bg-[#f2f9ff] border-[#338eda] text-[#338eda] hover:bg-[#338eda]"
+        class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424]"
         onclick={() => {
           window.location.href = buttonLink[0];
         }}
@@ -138,10 +138,10 @@
             <path d="m9 18 6-6-6-6" />
           </svg>
         {/if}
-        requirements</button
+        how does this work?</button
       >
       <button
-        class="bg-[#f2f9ff] border-[#24b971] text-[#24b971] hover:bg-[#24b971]"
+        class="bg-[#f2f9ff] border-[#338eda] text-[#338eda] hover:bg-[#338eda]"
         onclick={() => {
           window.location.href = buttonLink[1];
         }}
@@ -162,34 +162,10 @@
             <path d="m9 18 6-6-6-6" />
           </svg>
         {/if}
-        demos</button
+        requirements</button
       >
-      <button
-        class="bg-[#ffe4e8] border-[#ec3750] text-[#ec3750] hover:bg-[#ec3750]"
-        onclick={() => {
-          window.location.href = buttonLink[2];
-        }}
-      >
-        {#if selectedButton === 2}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-chevron-right-icon lucide-chevron-right"
-          >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        {/if}
-        faq
-      </button>
       {#if !mobileCheck()}
-        <p class="bg-white text-black px-2 text-sm md:text-base text-[clamp(0.75rem,1.5vw,1rem)]">
+        <p class="bg-white text-black px-2 text-sm md:text-base text-[clamp(0.75rem,1.5vw,1rem)] mt-[2vh]">
           use the up/down arrow keys to navigate. press enter to select.
         </p>
       {/if}
@@ -208,6 +184,86 @@
 </main>
 <div
   class="relative bg-[#050c2e] w-full min-h-screen z-10 py-16 px-4 md:px-12 flex flex-col items-center"
+  id="how-works"
+>
+  <h1 class="text-[8vw] text-center">how does this work?</h1>
+  <div class="w-full grid-cols-1 md:grid-cols-2 grid">
+    <div class="border-blue-200 border-2 px-2 py-2 w-full">
+      <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">1. join the slack</h1>
+      <p class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
+        join the <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline">hack club slack</a
+        >! you'll join a community of other teens with common interests in coding, game development, hardware, and other
+        cool stuff. <br /><br />
+        once you join, you can introduce yourself in the #welcome channel.
+      </p>
+      <br />
+      <p class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
+        the #joystick channel is where we'll post updates about this specific program.
+        <br />
+        this is where you can ask any questions you have, share your progress, and get feedback on your game. it's also a
+        great place to connect with other people who are making games!
+      </p>
+    </div>
+
+    <div class="border-blue-200 border-2 px-2 w-full py-2">
+      <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">2. make a game!</h1>
+      <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
+        think of an idea and start making! it can be anything from a story game, to a platformer, or a strategy game.<br
+        />
+        you can use any game engine or programming language, as long as your game meets the requirements listed below.<br
+        />
+        log your coding time on
+        <a href="https://hackatime.hackclub.com" target="_blank">hackatime</a>
+        and your art/music time on
+        <a href="https://lapse.hackclub.com" target="_blank">lapse</a>!
+      </p>
+      <h2 class="lg:text-[1.9vw] md:text-[3vw] text-[4vw] mt-[2vh]">what if i don't know how to make a game?</h2>
+      <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
+        <p>there's tons of resources online to help you get started! here's a few:</p>
+        <ul class="list-disc list-inside">
+          <li>
+            <a href="https://workshops.hackclub.com#games" target="_blank"> hack club game development workshops! </a>
+            <!-- i've done some of those workshops and they're goated -->
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@Brackeys" target="_blank">brackeys youtube channel</a>
+            (i'll recommend his godot tutorial)
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-blue-200 border-2 px-2 w-full py-2">
+      <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">3. submit your game!</h1>
+      <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
+        <div>
+          <input type="checkbox" disabled checked /> have you met all the <a href="#requirements">requirements</a>?
+        </div>
+        <div>
+          <input type="checkbox" disabled checked /> have you logged your coding time on hackatime and art/music time on
+          lapse?
+        </div>
+        <div>
+          <input type="checkbox" disabled checked /> do you have enough potential tokens to redeem the arcade machine parts
+          you want?
+        </div>
+        <p class="mt-[2vh]">
+          use <a href="https://fillout.com"> this </a> form to submit your game for review!<br /> once you submit, our
+          team will review your game and add the tokens to your account. <br />if we have any feedback, we'll DM you on
+          slack.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="w-full items-center justify-center flex absolute bottom-2">
+    <p>
+      have any questions? ask us on <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline"
+        >slack</a
+      >!
+    </p>
+  </div>
+</div>
+<div
+  class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="requirements"
 >
   <h1 class="text-[12vw] text-center">requirements</h1>
@@ -238,8 +294,8 @@
       <li class="list-item text-blue-400">
         your game must be playable on a computer or mobile device.<br />
         <span class="text-white text-lg font-[times_new_roman]">
-          building your game to the web will ensure it's accessible to as many people and will speed up the review
-          process.
+          we strongly recommend building your game to the web: it'll be accessible to more people and will speed up the
+          review process.
         </span>
       </li>
       <li class="list-item text-purple-400">
@@ -248,7 +304,8 @@
           check out <a href="https://hackatime.hackclub.com" target="_blank" class="text-blue-200 underline"
             >hackatime</a
           >
-          and <a href="https://lapse.hackclub.com" target="_blank" class="text-blue-200 underline">lapse</a>.
+          and <a href="https://lapse.hackclub.com" target="_blank" class="text-blue-200 underline">lapse</a> at those links.
+          we'll use these to calculate how many tokens you've earned. log your time honestly!
         </span>
       </li>
     </ol>
