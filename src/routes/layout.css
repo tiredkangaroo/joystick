@@ -14,7 +14,7 @@ html {
   @apply flex items-center justify-center gap-1 p-0;
 }
 #title > span {
-  @apply m-0 p-0 text-[10rem];
+  @apply m-0 p-0;
 }
 button {
   @apply cursor-pointer flex flex-row gap-2  w-fit px-4 py-2 rounded-full  border-2 hover:text-white duration-300;
