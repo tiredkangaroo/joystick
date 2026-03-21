@@ -108,12 +108,9 @@
       <span>k</span>
     </h1>
     <div class="text-center w-full flex flex-row justify-center">
-      <p class="text-[clamp(1rem,2.5vw,1.5rem)] bg-[#050c2e] w-fit">
+      <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">
         make a game, get an <b class="text-[clamp(1.1rem,3vw,1.875rem)]">arcade machine</b>!
       </p>
-    </div>
-    <div class="text-center w-full flex flex-row justify-center">
-      <p class="text-center text-[clamp(1rem,2.5vw,1.5rem)] bg-[#050c2e] w-fit">beginners always welcome!</p>
     </div>
     <div class="flex flex-col items-center justify-center mt-8 gap-3 w-full">
       <button
@@ -164,11 +161,6 @@
         {/if}
         requirements</button
       >
-      {#if !mobileCheck()}
-        <p class="bg-white text-black px-2 text-sm md:text-base text-[clamp(0.75rem,1.5vw,1rem)] mt-[2vh]">
-          use the up/down arrow keys to navigate. press enter to select.
-        </p>
-      {/if}
     </div>
   </div>
   <div class="z-30 absolute bottom-2 right-2 bg-black px-2 py-2">
@@ -247,11 +239,20 @@
           you want?
         </div>
         <p class="mt-[2vh]">
-          use <a href="https://fillout.com"> this </a> form to submit your game for review!<br /> once you submit, our
-          team will review your game and add the tokens to your account. <br />if we have any feedback, we'll DM you on
-          slack.
+          use <a href="# yo add this link later"> this </a> form to submit your game for review!<br /> once you submit,
+          our team will review your game and add the tokens to your account. <br />if we have any feedback, we'll DM you
+          on slack.
         </p>
       </div>
+    </div>
+    <div class="border-blue-200 border-2 px-2 w-full py-2">
+      <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">4. get your arcade machine!</h1>
+      <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
+        redeem your tokens for arcade machine parts at the <a href="#yo add this link later">ordering page</a>! our team
+        will ship the parts to you and help you with any questions you have about assembling or programming your arcade
+        machine. <br /><br />
+        once you assemble your arcade machine, share a video of it on the #joystick channel on slack. we'd love to see it!
+      </p>
     </div>
   </div>
   <div class="w-full items-center justify-center flex absolute bottom-2">
@@ -269,7 +270,7 @@
   <h1 class="text-[12vw] text-center">requirements</h1>
   <div class="w-full items-center justify-center flex">
     <ol
-      class="list-decimal list-inside items-start justify-center px-4 text-lg md:text-xl lg:text-2xl flex flex-col gap-8 md:gap-12"
+      class="list-decimal list-inside items-start justify-center px-4 text-lg md:text-xl lg:text-2xl flex flex-col gap-8 md:gap-10"
     >
       <li class="list-item text-red-300 font-[times_new_roman]">
         you must be <b class="">13-18 years old</b>. hack club is for teens!
