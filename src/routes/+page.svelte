@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  var selectedButton = $state(0);
   var scrollY = $state(window.scrollY);
   window.onscroll = () => {
     scrollY = window.scrollY;
@@ -19,69 +18,26 @@
     });
   };
 
-  onMount(() => {
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    let images: HTMLImageElement[] = [];
-
-    const render = () => {
-      if (images.length < 2) return;
-
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-
-      ctx.save();
-      ctx.translate(canvas.width / 20, canvas.height / 6);
-      ctx.rotate((Math.PI / 180) * 15);
-      ctx.drawImage(images[0], 0, 0);
-      ctx.restore();
-
-      ctx.save();
-      ctx.translate(canvas.width / 1.67, canvas.height / 3);
-      ctx.rotate((Math.PI / 180) * -15);
-      ctx.drawImage(images[1], 0, 0);
-      ctx.restore();
-    };
-
-    Promise.all([loadImage("/images/arcademachine.png"), loadImage("/images/controller-1.png")]).then(
-      (loadedImages) => {
-        images = loadedImages;
-        render();
-      },
-    );
-
-    window.onresize = async () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      render();
-    };
-  });
-
-  const numButtons = 2;
-  const buttonLink = ["#how-works", "#requirements"];
+  const pages = ["#bg", "#how-works", "#requirements"];
+  let currentPage = $state(window.location.hash || "#bg");
   document.onkeydown = (e) => {
-    console.log(e.key);
-    if (e.key !== "Tab") e.preventDefault();
-    if (e.key === "ArrowDown" || e.key === "s") {
-      if (selectedButton >= numButtons - 1) {
-        selectedButton = 0;
-        return;
-      }
-      selectedButton++;
-    } else if (e.key === "ArrowUp" || e.key === "w") {
-      if (selectedButton <= 0) {
-        selectedButton = numButtons - 1;
-        e.preventDefault();
-        return;
-      }
-      selectedButton--;
-    } else if (e.key === "Enter") {
-      window.location.href = buttonLink[selectedButton];
+    if (e.key === "s") {
+      const currentIndex = pages.indexOf(currentPage);
+      const nextPage = pages[currentIndex + 1] || pages[0];
+      window.location.hash = nextPage;
+      currentPage = nextPage;
+    } else if (e.key === "w") {
+      const currentIndex = pages.indexOf(currentPage);
+      const prevPage = pages[currentIndex - 1] || pages[pages.length - 1];
+      window.location.hash = prevPage;
+      currentPage = prevPage;
     }
+  };
+  window.onscroll = () => {
+    const scrollPosition = window.scrollY;
+    const pageHeight = window.innerHeight;
+    const pageIndex = Math.round(scrollPosition / pageHeight);
+    currentPage = pages[pageIndex] || "#bg";
   };
 
   // https://stackoverflow.com/a/11381730/16467184
@@ -102,122 +58,87 @@
   }
 </script>
 
-<div class="absolute right-0 top-0 bg-white text-black z-30 flex flex-row gap-2 px-2 py-2 text-sm md:text-bas">
-  <input
-    type="checkbox"
-    onchange={(e) => {
-      if ((e.target as HTMLInputElement).checked) {
-        document.getElementsByTagName("html")[0].style.fontFamily = "Times New Roman, serif";
-      } else {
-        document.getElementsByTagName("html")[0].style.fontFamily = "Pixelify Sans, Times, serif";
-      }
-    }}
-  />
-  <p class="font-[Times_New_Roman,serif]">enable easier to read font</p>
-</div>
-<canvas class="w-full h-full absolute" id="bgCanvas" bind:this={canvas}></canvas>
-<main class="w-full h-full bg-[#050c2e]" id="bg">
-  <!-- <header class="w-full h-16 flex flex-row justify-end items-center pr-4 absolute z-20">
-    <button
-      class="bg-[#ffe5e8] text-[#ec3750] hover:text-white border-2 border-[#ec3750] hover:bg-[#ec3750] duration-300 px-4 py-2 rounded-full"
-    >
-      Sign In
-    </button>
-  </header> -->
-  <div class="absolute flex flex-col gap-2 z-10 w-full">
-    <h1 class="lg:text-[14vw] md:text-[18vw] text-[17vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0" id="title">
-      <span>&#91;</span>
-      <span>j</span>
-      <span>o</span>
-      <span>y</span>
-      <span>s</span>
-      <span>t</span>
-      <span>i</span>
-      <span>c</span>
-      <span>k</span>
-      <span>&#93;</span>
-    </h1>
-    <div class="text-center w-full flex flex-col items-center justify-center">
-      <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">
-        make a game, get an <b class="text-[110%]">arcade machine</b>!
-      </p>
-      <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">june 22nd, 2026 - july 17th, 2026</p>
+{#if !mobileCheck()}
+  <div class="absolute right-2 top-1 bg-white text-black z-30 flex flex-col gap-2 px-2 py-2 text-sm md:text-base">
+    <div class="flex flex-row items-center gap-2">
+      <input
+        type="checkbox"
+        onchange={(e) => {
+          if ((e.target as HTMLInputElement).checked) {
+            document.getElementsByTagName("html")[0].style.fontFamily = "Times New Roman, serif";
+          } else {
+            document.getElementsByTagName("html")[0].style.fontFamily = "Pixelify Sans, Times, serif";
+          }
+        }}
+      />
+      <p class="font-[Times_New_Roman,serif]">enable easier to read font</p>
     </div>
-    <div class="flex flex-col items-center justify-center mt-8 gap-3 w-full">
-      <button
-        class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424]"
-        onclick={() => {
-          window.location.href = buttonLink[0];
+    <div class="flex flex-row items-center gap-2">
+      <input
+        type="checkbox"
+        onchange={(e) => {
+          if ((e.target as HTMLInputElement).checked) {
+            document.documentElement.setAttribute("data-theme", "dark");
+          } else {
+            document.documentElement.removeAttribute("data-theme");
+          }
         }}
-        onmouseenter={() => {
-          selectedButton = 0;
-        }}
-      >
-        {#if selectedButton === 0}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-chevron-right-icon lucide-chevron-right"
-          >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        {/if}
-        how does this work?</button
-      >
-      <button
-        class="bg-[#f2f9ff] border-[#338eda] text-[#338eda] hover:bg-[#338eda]"
-        onclick={() => {
-          window.location.href = buttonLink[1];
-        }}
-        onmouseenter={() => {
-          selectedButton = 1;
-        }}
-      >
-        {#if selectedButton === 1}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-chevron-right-icon lucide-chevron-right"
-          >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        {/if}
-        requirements</button
-      >
+      />
+      <p class="font-[Times_New_Roman,serif]">enable dark mode</p>
     </div>
   </div>
-  <div class="z-30 absolute bottom-2 right-2 bg-black px-2 py-2">
-    <p>made with ❤️ by <a href="https://hackclub.com" target="_blank" class="text-blue-200 underline">hack club</a></p>
+{/if}
+<main class="w-full h-full dark:bg-[#050c2e] bg-[#99d9ea]" id="bg">
+  <img
+    class="absolute md:bottom-[10vh] bottom-[20vh] md:left-[4vw] left-[1vw] rotate-15 md:w-[35vw] w-[60vw]"
+    alt="arcade machine"
+    src="/images/arcademachine.png"
+  />
+  <img class="absolute bottom-[14vh] right-[4vw] -rotate-15 w-[35vw]" alt="controller" src="/images/controller-1.png" />
+  <div class="absolute flex flex-col gap-2 z-10 w-full">
+    <h1
+      class="lg:text-[14vw] md:text-[18vw] text-[17vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0 h-fit"
+      id="title"
+    >
+      <span class="animate-[flicker_3s_infinite]">&#91;</span>
+      <span class="animate-[stutterglitch_3s_infinite]">j</span>
+      <span class="animate-[glitchfast_4s_infinite]">o</span>
+      <span class="animate-[flicker_5s_infinite]">y</span>
+      <span class="animate-[glitchfast_3s_infinite]">s</span>
+      <span class="animate-[stutterglitch_3s_infinite]">t</span>
+      <span class="animate-[glitchfast_3s_infinite]">i</span>
+      <span class="animate-[glitchfast_4s_infinite]">c</span>
+      <span class="animate-[glitchfast_5s_infinite]">k</span>
+      <span class="animate-[stutterglitch_3s_infinite]">&#93;</span>
+    </h1>
+    <div class="text-center w-full flex justify-center gap-4">
+      <div class="bg-[#99d9ea] dark:bg-[#050c2e] flex flex-col items-center">
+        <p class="text-[clamp(1.5rem,3vw,2rem)] dark:bg-[#050c2e] bg-[#99d9ea] opacity-90 w-fit">make a game, get an</p>
+        <b class="text-[300%] bg-[#99d9ea] dark:bg-[#050c2e]">arcade machine!</b>
+        <p class="text-[clamp(1rem,2.2vw,1.2rem)] dark:bg-[#050c2e] bg-[#99d9ea] w-fit">
+          june 22nd, 2026 - july 17th, 2026
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="z-30 absolute lg:bottom-2 md:bottom-4 bottom-8 right-2 bg-white dark:bg-black px-2 py-2">
+    <p>
+      made with ❤️ by <a href="https://hackclub.com" target="_blank">hack club</a>
+    </p>
     <div class="flex flex-row gap-2">
-      <a href="https://github.com/tiredkangaroo/joystick" target="_blank" class="text-blue-200 underline"
-        >open source!</a
-      >
+      <a href="https://github.com/tiredkangaroo/joystick" target="_blank">open source!</a>
       |
-      <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline">join the slack!</a>
+      <a href="https://hackclub.com/slack" target="_blank">join the slack!</a>
     </div>
   </div>
 </main>
 <div
-  class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
+  class="relative dark:bg-[#050c2e] bg-[#99d9ea] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="how-works"
 >
   <h1 class="text-[8vw] text-center">how does this work?</h1>
   <div class="w-full grid-cols-1 md:grid-cols-2 grid gap-2">
-    <div class="border-blue-200 border-2 px-2 py-2 w-full">
+    <div class="dark:border-blue-200 border-blue-900 border-2 px-2 py-2 w-full">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">1. join the slack</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
         join the <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline">hack club slack</a
@@ -235,19 +156,19 @@
       </p>
       <br />
       <p class="font-[times_new_roman] lg:text-[1.2vw] md:text-[2vw] text-[4vw]">
-        <span class="font-bold text-red-300 text-[110%]">important!</span>
+        <span class="font-bold dark:text-red-300 text-red-800 text-[110%]">important!</span>
         you're going to need to be on the hack club slack to participate in joystick!
       </p>
     </div>
 
-    <div class="border-blue-200 border-2 px-2 w-full py-2">
+    <div class="dark:border-blue-200 border-blue-900 border-2 px-2 w-full py-2">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">2. make a game!</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
         think of an idea and start making! it can be anything from a story game, to a platformer, to a strategy game. it
         doesn't have to be conventional: make <i>whatever</i> you want!<br /><br />
         you can use any game engine or programming language, as long as your game meets the requirements listed below.<br
         /><br />
-        <span class="font-bold text-red-300 text-[110%]">important!</span> log your coding time on
+        <span class="font-bold dark:text-red-300 text-red-800 text-[110%]">important!</span> log your coding time on
         <a href="https://hackatime.hackclub.com" target="_blank">hackatime</a>
         and your art/music time on
         <a href="https://lapse.hackclub.com" target="_blank">lapse</a>!
@@ -272,7 +193,7 @@
         </p>
       </div>
     </div>
-    <div class="border-blue-200 border-2 px-2 w-full py-2">
+    <div class="dark:border-blue-200 border-blue-900 border-2 px-2 w-full py-2">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">3. submit your game!</h1>
       <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
         <div>
@@ -299,7 +220,7 @@
         </p>
       </div>
     </div>
-    <div class="border-blue-200 border-2 px-2 w-full py-2">
+    <div class="dark:border-blue-200 border-blue-900 border-2 px-2 w-full py-2">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">4. get your arcade machine!</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
         redeem your tokens for arcade machine parts at the <a
@@ -312,19 +233,17 @@
         once you assemble your arcade machine, share a video of it on the #joystick channel on slack. we'd love to see it!
       </p>
     </div>
-    <div class="w-full items-center justify-center flex mt-[2vh] bottom-2">
-      <p>
-        have any questions? ask us on <a
-          href="https://hackclub.com/slack"
-          target="_blank"
-          class="text-blue-200 underline">slack</a
-        >!
-      </p>
-    </div>
+  </div>
+  <div class="w-full items-center justify-center flex mt-[2vh] bottom-2">
+    <p>
+      have any questions? ask us on <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline"
+        >slack</a
+      >!
+    </p>
   </div>
 </div>
 <div
-  class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
+  class="relative dark:bg-[#050c2e] bg-[#99d9ea] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="requirements"
 >
   <div class="flex flex-row items-center-safe w-full justify-center">
@@ -334,36 +253,38 @@
     <ol
       class="list-decimal list-inside items-start justify-center px-4 text-lg md:text-xl lg:text-2xl flex flex-col gap-8 md:gap-10"
     >
-      <li class="list-item text-red-300">
+      <li class="list-item dark:text-red-300 text-red-800">
         you must be <b class="font-[times_new_roman]">13-18 years old</b>. hack club is a teen community!
       </li>
-      <li class="list-item text-orange-300">
+      <li class="list-item dark:text-orange-300 text-orange-800">
         your game must be original. avoid copying existing games. <br />
-        <span class="text-white text-lg font-[times_new_roman]"
+        <span class="dark:text-white text-black text-lg font-[times_new_roman]"
           >we want to see your creativity shine! if your game is similar to an existing game, make sure to add your own
           unique twist.</span
         >
       </li>
-      <li class="list-item text-yellow-300">
+      <li class="list-item dark:text-yellow-300 text-yellow-800">
         your game should be fun and engaging!<br />
-        <span class="text-white text-lg font-[times_new_roman]">aim for five minutes of engaging gameplay.</span>
+        <span class="dark:text-white text-black text-lg font-[times_new_roman]"
+          >aim for five minutes of engaging gameplay.</span
+        >
       </li>
-      <li class="list-item text-green-400">
+      <li class="list-item dark:text-green-300 text-green-800">
         absolutely NO ai generated art or music. <br />
-        <span class="text-white text-lg font-[times_new_roman]"
+        <span class="dark:text-white text-black text-lg font-[times_new_roman]"
           >additionally, minimize the use of ai in code. we want to see your creativity, even if it's not perfect!</span
         >
       </li>
-      <li class="list-item text-blue-400">
+      <li class="list-item dark:text-blue-300 text-blue-800">
         your game must be playable on a computer or mobile device.<br />
-        <span class="text-white text-lg font-[times_new_roman]">
+        <span class="dark:text-white text-black text-lg font-[times_new_roman]">
           we strongly recommend building your game to the web: it'll be accessible to more people and will speed up the
           review process.
         </span>
       </li>
-      <li class="list-item text-purple-400">
+      <li class="list-item dark:text-purple-300 text-purple-800">
         you must log your time using hackatime and lapse. <br />
-        <span class="font-[times_new_roman] text-white text-lg">
+        <span class="font-[times_new_roman] dark:text-white text-black text-lg">
           check out <a href="https://hackatime.hackclub.com" target="_blank" class="text-blue-200 underline"
             >hackatime</a
           >

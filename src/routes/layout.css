@@ -1,23 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root,
 html,
 body,
 body > div {
-  @apply w-full h-full m-0 p-0 text-white;
+  @apply w-full h-full m-0 p-0 dark:text-white text-black;
 }
 html {
   font-family: "Pixelify Sans", "Times New Roman", Times, serif;
-  scroll-snap-type: y proximity;
   overflow-y: scroll;
 }
-#bg,
+/* #bg,
 #how-works,
 #requirements {
   scroll-snap-align: start;
-  /* height: 100vh; */
-}
+  /* height: 100vh; 
+} */
 #title {
   @apply flex items-center justify-center gap-1 p-0;
 }
@@ -25,16 +26,83 @@ html {
   @apply m-0 p-0;
 }
 button {
-  @apply cursor-pointer flex flex-row gap-2  w-fit px-4 py-2 rounded-full  border-2 hover:text-white duration-300;
+  @apply cursor-pointer flex flex-row gap-2  w-fit px-4 py-2 rounded-full  border-2 hover:dark:text-white text-black duration-300;
+}
+@keyframes flicker {
+  0%,
+  19.999%,
+  22%,
+  62.999%,
+  64%,
+  64.999%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  21.999%,
+  63%,
+  63.999%,
+  65%,
+  69.999% {
+    opacity: 0.3;
+  }
+}
+@keyframes glitchfast {
+  0%,
+  10%,
+  11%,
+  12.1%,
+  13%,
+  30%,
+  31%,
+  100% {
+    opacity: 1;
+  }
+  10.1%,
+  10.9%,
+  12%,
+  12.9%,
+  30.1%,
+  30.9% {
+    opacity: 0.1;
+  }
+}
+@keyframes stutterglitch {
+  0%,
+  14.9%,
+  17.1%,
+  19.9%,
+  22.1%,
+  54.9%,
+  57.1%,
+  79.9%,
+  82.1%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  15%,
+  17%,
+  20%,
+  22%,
+  55%,
+  57%,
+  80%,
+  82% {
+    opacity: 0.1;
+    filter: brightness(0.5);
+  }
 }
 
 #bg {
-  background-image: url("/images/bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  @apply bg-[url("/images/bglight.png")] dark:bg-[url("/images/bg.png")] bg-cover bg-no-repeat;
+  /* background-image: url("/images/bglight.png"); */
+  /* background-repeat: no-repeat;
+  background-size: cover; */
 }
 a {
-  @apply cursor-pointer text-blue-200 underline;
+  @apply cursor-pointer dark:text-blue-200 text-blue-800 underline;
 }
 html {
   scroll-behavior: smooth;
