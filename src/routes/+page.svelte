@@ -8,6 +8,17 @@
   };
 
   let canvas: HTMLCanvasElement;
+
+  // load image as promsie
+  const loadImage = (src: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+    });
+  };
+
   onMount(() => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -15,25 +26,38 @@
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
-    function drawImage(ctx: CanvasRenderingContext2D, i: HTMLImageElement) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let images: HTMLImageElement[] = [];
+
+    const render = () => {
+      if (images.length < 2) return;
+
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
       ctx.save();
       ctx.translate(canvas.width / 20, canvas.height / 6);
       ctx.rotate((Math.PI / 180) * 15);
-      ctx.drawImage(i, 0, 0);
+      ctx.drawImage(images[0], 0, 0);
       ctx.restore();
-    }
-    var img = new Image();
-    img.src = "/images/arcademachine.png";
-    img.onload = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      drawImage(ctx, img);
+
+      ctx.save();
+      ctx.translate(canvas.width / 1.67, canvas.height / 3);
+      ctx.rotate((Math.PI / 180) * -15);
+      ctx.drawImage(images[1], 0, 0);
+      ctx.restore();
     };
-    window.onresize = () => {
+
+    Promise.all([loadImage("/images/arcademachine.png"), loadImage("/images/controller-1.png")]).then(
+      (loadedImages) => {
+        images = loadedImages;
+        render();
+      },
+    );
+
+    window.onresize = async () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-      drawImage(ctx, img);
+      render();
     };
   });
 
@@ -102,6 +126,7 @@
   </header> -->
   <div class="absolute flex flex-col gap-2 z-10 w-full">
     <h1 class="lg:text-[14vw] md:text-[18vw] text-[20vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0" id="title">
+      <span>&#91;</span>
       <span>j</span>
       <span>o</span>
       <span>y</span>
@@ -110,6 +135,7 @@
       <span>i</span>
       <span>c</span>
       <span>k</span>
+      <span>&#93;</span>
     </h1>
     <div class="text-center w-full flex flex-col items-center justify-center">
       <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">
