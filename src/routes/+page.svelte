@@ -100,16 +100,16 @@
       class="lg:text-[14vw] md:text-[18vw] text-[17vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0 h-fit"
       id="title"
     >
-      <span class="animate-[flicker_3s_infinite]">&#91;</span>
-      <span class="animate-[stutterglitch_3s_infinite]">j</span>
+      <span class="animate-[flicker_4s_infinite]">&#91;</span>
+      <span class="animate-[stutterglitch_4s_infinite]">j</span>
       <span class="animate-[glitchfast_4s_infinite]">o</span>
       <span class="animate-[flicker_5s_infinite]">y</span>
       <span class="animate-[glitchfast_3s_infinite]">s</span>
-      <span class="animate-[stutterglitch_3s_infinite]">t</span>
-      <span class="animate-[glitchfast_3s_infinite]">i</span>
+      <span class="animate-[stutterglitch_4s_infinite]">t</span>
+      <span class="animate-[glitchfast_4s_infinite]">i</span>
       <span class="animate-[glitchfast_4s_infinite]">c</span>
       <span class="animate-[glitchfast_5s_infinite]">k</span>
-      <span class="animate-[stutterglitch_3s_infinite]">&#93;</span>
+      <span class="animate-[stutterglitch_4s_infinite]">&#93;</span>
     </h1>
     <div class="text-center w-full flex justify-center gap-4">
       <div class="bg-[#99d9ea] dark:bg-[#050c2e] flex flex-col items-center">
@@ -171,7 +171,8 @@
         <span class="font-bold dark:text-red-300 text-red-800 text-[110%]">important!</span> log your coding time on
         <a href="https://hackatime.hackclub.com" target="_blank">hackatime</a>
         and your art/music time on
-        <a href="https://lapse.hackclub.com" target="_blank">lapse</a>!
+        <a href="https://lapse.hackclub.com" target="_blank">lapse</a>! this will be used to calculate how many tokens
+        you've earned, which you'll use to redeem your arcade machine parts.
       </p>
       <h2 class="lg:text-[1.9vw] md:text-[3vw] text-[4vw] mt-[2vh]">what if i don't know how to make a game?</h2>
       <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
