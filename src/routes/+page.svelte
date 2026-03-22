@@ -276,7 +276,7 @@
         >
       </li>
       <li class="list-item dark:text-blue-300 text-blue-800">
-        your game must be playable on a computer or mobile device.<br />
+        your game must be open source & playable on a computer or mobile device.<br />
         <span class="dark:text-white text-black text-lg font-[times_new_roman]">
           we strongly recommend building your game to the web: it'll be accessible to more people and will speed up the
           review process.
