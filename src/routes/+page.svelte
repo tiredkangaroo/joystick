@@ -2,13 +2,15 @@
   import { onMount } from "svelte";
 
   var selectedButton = $state(0);
+  var scrollY = $state(window.scrollY);
+  window.onscroll = () => {
+    scrollY = window.scrollY;
+  };
 
   let canvas: HTMLCanvasElement;
   onMount(() => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    var selectedButton = $state(0);
 
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -24,6 +26,8 @@
     var img = new Image();
     img.src = "/images/arcademachine.png";
     img.onload = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
       drawImage(ctx, img);
     };
     window.onresize = () => {
@@ -37,14 +41,14 @@
   const buttonLink = ["#how-works", "#requirements"];
   document.onkeydown = (e) => {
     console.log(e.key);
-    if (e.key === "ArrowDown") {
+    e.preventDefault();
+    if (e.key === "ArrowDown" || e.key === "s") {
       if (selectedButton >= numButtons - 1) {
         selectedButton = 0;
-        e.preventDefault();
         return;
       }
       selectedButton++;
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === "ArrowUp" || e.key === "w") {
       if (selectedButton <= 0) {
         selectedButton = numButtons - 1;
         e.preventDefault();
@@ -107,16 +111,20 @@
       <span>c</span>
       <span>k</span>
     </h1>
-    <div class="text-center w-full flex flex-row justify-center">
+    <div class="text-center w-full flex flex-col items-center justify-center">
       <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">
-        make a game, get an <b class="text-[clamp(1.1rem,3vw,1.875rem)]">arcade machine</b>!
+        make a game, get an <b class="text-[110%]">arcade machine</b>!
       </p>
+      <p class="text-[clamp(1.5rem,3vw,2rem)] bg-[#050c2e] w-fit">june 22nd, 2026 - july 17th, 2026</p>
     </div>
     <div class="flex flex-col items-center justify-center mt-8 gap-3 w-full">
       <button
         class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424]"
         onclick={() => {
           window.location.href = buttonLink[0];
+        }}
+        onmouseenter={() => {
+          selectedButton = 0;
         }}
       >
         {#if selectedButton === 0}
@@ -141,6 +149,9 @@
         class="bg-[#f2f9ff] border-[#338eda] text-[#338eda] hover:bg-[#338eda]"
         onclick={() => {
           window.location.href = buttonLink[1];
+        }}
+        onmouseenter={() => {
+          selectedButton = 1;
         }}
       >
         {#if selectedButton === 1}
@@ -178,7 +189,19 @@
   class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="how-works"
 >
-  <h1 class="text-[8vw] text-center">how does this work?</h1>
+  <div class="flex flex-row items-center-safe w-full justify-between">
+    <button
+      class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424] h-fit"
+      onclick={() => {
+        // scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.location.hash = "";
+      }}
+    >
+      go to top
+    </button>
+    <h1 class="text-[8vw] text-center">how does this work?</h1>
+  </div>
   <div class="w-full grid-cols-1 md:grid-cols-2 grid">
     <div class="border-blue-200 border-2 px-2 py-2 w-full">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">1. join the slack</h1>
@@ -189,19 +212,25 @@
         once you join, you can introduce yourself in the #welcome channel.
       </p>
       <br />
+      <h2 class="lg:text-[2vw] md:text-[4vw] text-[6vw]">the #joystick channel</h2>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
-        the #joystick channel is where we'll post updates about this specific program.
-        <br />
+        the #joystick channel is where we'll post updates about this program.
+        <br /><br />
         this is where you can ask any questions you have, share your progress, and get feedback on your game. it's also a
         great place to connect with other people who are making games!
+      </p>
+      <br />
+      <p class="font-[times_new_roman] lg:text-[1.2vw] md:text-[2vw] text-[4vw]">
+        <span class="font-bold text-red-300 text-[110%]">important!</span>
+        you're going to need to be on the hack club slack to participate in joystick!
       </p>
     </div>
 
     <div class="border-blue-200 border-2 px-2 w-full py-2">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">2. make a game!</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
-        think of an idea and start making! it can be anything from a story game, to a platformer, or a strategy game.<br
-        /><br />
+        think of an idea and start making! it can be anything from a story game, to a platformer, to a strategy game. it
+        doesn't have to be conventional: make <i>whatever</i> you want!<br /><br />
         you can use any game engine or programming language, as long as your game meets the requirements listed below.<br
         /><br />
         <span class="font-bold text-red-300 text-[110%]">important!</span> log your coding time on
@@ -211,7 +240,7 @@
       </p>
       <h2 class="lg:text-[1.9vw] md:text-[3vw] text-[4vw] mt-[2vh]">what if i don't know how to make a game?</h2>
       <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
-        <p>there's tons of resources online to help you get started! here's a few:</p>
+        <p>there's tons of resources online to help you get started! here's two:</p>
         <ul class="list-disc list-inside">
           <li>
             <a href="https://workshops.hackclub.com#games" target="_blank"> hack club game development workshops! </a>
@@ -222,6 +251,11 @@
             (i'll recommend his godot tutorial)
           </li>
         </ul>
+        <br />
+        <p>
+          project based learning is great! make your project, and when you don't know how to do something specific, find
+          a tutorial or ask for help!
+        </p>
       </div>
     </div>
     <div class="border-blue-200 border-2 px-2 w-full py-2">
@@ -239,18 +273,28 @@
           you want?
         </div>
         <p class="mt-[2vh]">
-          use <a href="# yo add this link later"> this </a> form to submit your game for review!<br /> once you submit,
-          our team will review your game and add the tokens to your account. <br />if we have any feedback, we'll DM you
-          on slack.
+          use <a
+            onclick={() => {
+              alert("the submission form isn't ready yet! this event is not currently running :)");
+            }}
+          >
+            this
+          </a>
+          form to submit your game for review!<br /> once you submit, our team will review your game and add the tokens
+          to your account. <br />if we have any feedback, we'll DM you on slack.
         </p>
       </div>
     </div>
     <div class="border-blue-200 border-2 px-2 w-full py-2">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">4. get your arcade machine!</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[3.5vw] font-[times_new_roman]">
-        redeem your tokens for arcade machine parts at the <a href="#yo add this link later">ordering page</a>! our team
-        will ship the parts to you and help you with any questions you have about assembling or programming your arcade
-        machine. <br /><br />
+        redeem your tokens for arcade machine parts at the <a
+          onclick={() => {
+            alert("the ordering page is getting it's final garnish right now! this event is not currently running :)");
+          }}>ordering page</a
+        >! our team will ship the parts to you and help you with any questions you have about assembling your arcade
+        machine.
+        <br /><br />
         once you assemble your arcade machine, share a video of it on the #joystick channel on slack. we'd love to see it!
       </p>
     </div>
@@ -267,13 +311,25 @@
   class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="requirements"
 >
-  <h1 class="text-[12vw] text-center">requirements</h1>
+  <div class="flex flex-row items-center-safe w-full justify-between">
+    <button
+      class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424] h-fit"
+      onclick={() => {
+        // scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.location.hash = "";
+      }}
+    >
+      go to top
+    </button>
+    <h1 class="text-[12vw] text-center">requirements</h1>
+  </div>
   <div class="w-full items-center justify-center flex">
     <ol
       class="list-decimal list-inside items-start justify-center px-4 text-lg md:text-xl lg:text-2xl flex flex-col gap-8 md:gap-10"
     >
-      <li class="list-item text-red-300 font-[times_new_roman]">
-        you must be <b class="">13-18 years old</b>. hack club is for teens!
+      <li class="list-item text-red-300">
+        you must be <b class="font-[times_new_roman]">13-18 years old</b>. hack club is a teen community!
       </li>
       <li class="list-item text-orange-300">
         your game must be original. avoid copying existing games. <br />
