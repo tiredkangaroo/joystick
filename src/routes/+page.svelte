@@ -327,7 +327,7 @@
   class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="requirements"
 >
-  <div class="flex flex-row items-center-safe w-full justify-between">
+  <div class="flex flex-row items-center-safe w-full justify-center">
     <h1 class="text-[12vw] text-center">requirements</h1>
   </div>
   <div class="w-full items-center justify-center flex">
