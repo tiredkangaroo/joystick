@@ -65,7 +65,7 @@
   const buttonLink = ["#how-works", "#requirements"];
   document.onkeydown = (e) => {
     console.log(e.key);
-    e.preventDefault();
+    if (e.key !== "Tab") e.preventDefault();
     if (e.key === "ArrowDown" || e.key === "s") {
       if (selectedButton >= numButtons - 1) {
         selectedButton = 0;
@@ -125,7 +125,7 @@
     </button>
   </header> -->
   <div class="absolute flex flex-col gap-2 z-10 w-full">
-    <h1 class="lg:text-[14vw] md:text-[18vw] text-[20vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0" id="title">
+    <h1 class="lg:text-[14vw] md:text-[18vw] text-[17vw] text-center lg:mt-[3%] md:mt-[15%] mt-[30%] gap-0" id="title">
       <span>&#91;</span>
       <span>j</span>
       <span>o</span>
@@ -215,20 +215,8 @@
   class="relative bg-[#050c2e] w-full min-h-screen z-10 pb-2 px-4 md:px-12 flex flex-col items-center"
   id="how-works"
 >
-  <div class="flex flex-row items-center-safe w-full justify-between">
-    <button
-      class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424] h-fit"
-      onclick={() => {
-        // scroll to top smoothly
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        window.location.hash = "";
-      }}
-    >
-      go to top
-    </button>
-    <h1 class="text-[8vw] text-center">how does this work?</h1>
-  </div>
-  <div class="w-full grid-cols-1 md:grid-cols-2 grid">
+  <h1 class="text-[8vw] text-center">how does this work?</h1>
+  <div class="w-full grid-cols-1 md:grid-cols-2 grid gap-2">
     <div class="border-blue-200 border-2 px-2 py-2 w-full">
       <h1 class="lg:text-[3vw] md:text-[5vw] text-[8vw]">1. join the slack</h1>
       <p class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
@@ -324,13 +312,15 @@
         once you assemble your arcade machine, share a video of it on the #joystick channel on slack. we'd love to see it!
       </p>
     </div>
-  </div>
-  <div class="w-full items-center justify-center flex mt-[2vh] bottom-2">
-    <p>
-      have any questions? ask us on <a href="https://hackclub.com/slack" target="_blank" class="text-blue-200 underline"
-        >slack</a
-      >!
-    </p>
+    <div class="w-full items-center justify-center flex mt-[2vh] bottom-2">
+      <p>
+        have any questions? ask us on <a
+          href="https://hackclub.com/slack"
+          target="_blank"
+          class="text-blue-200 underline">slack</a
+        >!
+      </p>
+    </div>
   </div>
 </div>
 <div
@@ -338,16 +328,6 @@
   id="requirements"
 >
   <div class="flex flex-row items-center-safe w-full justify-between">
-    <button
-      class="bg-[#fff2f2] border-[#b92424] text-[#b92424] hover:bg-[#b92424] h-fit"
-      onclick={() => {
-        // scroll to top smoothly
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        window.location.hash = "";
-      }}
-    >
-      go to top
-    </button>
     <h1 class="text-[12vw] text-center">requirements</h1>
   </div>
   <div class="w-full items-center justify-center flex">
