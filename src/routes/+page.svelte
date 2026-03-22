@@ -270,7 +270,7 @@
         >
       </li>
       <li class="list-item dark:text-green-300 text-green-800">
-        absolutely NO ai generated art or music. <br />
+        absolutely NO ai generated art, music, README, or docs. <br />
         <span class="dark:text-white text-black text-lg font-[times_new_roman]"
           >additionally, minimize the use of ai in code. we want to see your creativity, even if it's not perfect!</span
         >
