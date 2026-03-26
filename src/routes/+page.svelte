@@ -176,7 +176,7 @@
       </p>
       <h2 class="lg:text-[1.9vw] md:text-[3vw] text-[4vw] mt-[2vh]">what if i don't know how to make a game?</h2>
       <div class="lg:text-[1.2vw] md:text-[2vw] text-[4vw] font-[times_new_roman]">
-        <p>there's tons of resources online to help you get started! here's two:</p>
+        <p>there's tons of resources online to help you get started! here's two of my favorites:</p>
         <ul class="list-disc list-inside">
           <li>
             <a href="https://workshops.hackclub.com#games" target="_blank"> hack club game development workshops! </a>
